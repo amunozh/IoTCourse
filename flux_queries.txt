@@ -1,0 +1,59 @@
+TEMPERATURE
+
+from(bucket: "iot-course-data")
+  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)
+  |> filter(fn: (r) => r["_measurement"] == "<RPiSerial>")
+  |> filter(fn: (r) => r["_field"] == "temperature")
+  |> filter(fn: (r) => r["sensor_name"] == "Environment")
+  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)
+  |> yield(name: "mean")
+
+PRESSURE
+
+from(bucket: "iot-course-data")
+  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)
+  |> filter(fn: (r) => r["_measurement"] == "<RPiSerial>")
+  |> filter(fn: (r) => r["_field"] == "pressure")
+  |> filter(fn: (r) => r["sensor_name"] == "Environment")
+  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)
+  |> yield(name: "mean")
+
+HUMIDITY
+
+from(bucket: "iot-course-data")
+  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)
+  |> filter(fn: (r) => r["_measurement"] == "<RPiSerial>")
+  |> filter(fn: (r) => r["_field"] == "humidity")
+  |> filter(fn: (r) => r["sensor_name"] == "Environment")
+  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)
+  |> yield(name: "mean")
+
+EULER ANGLES
+
+from(bucket: "iot-course-data")
+  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)
+  |> filter(fn: (r) => r["_measurement"] == "<RPiSerial>")
+  |> filter(fn: (r) => r["_field"] == "roll" or r["_field"] == "pitch" or r["_field"] == "yaw")
+  |> filter(fn: (r) => r["sensor_name"] == "Motion")
+  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)
+  |> yield(name: "mean")
+
+MOTION
+
+from(bucket: "iot-course-data")
+  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)
+  |> filter(fn: (r) => r["_measurement"] == "<RPiSerial>")
+  |> filter(fn: (r) => r["_field"] == "x" or r["_field"] == "y" or r["_field"] == "z")
+  |> filter(fn: (r) => r["sensor_name"] == "Motion")
+  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)
+  |> yield(name: "mean")
+
+MOTION ROUNDED
+
+from(bucket: "iot-course-data")
+  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)
+  |> filter(fn: (r) => r["_measurement"] == "<RPiSerial>")
+  |> filter(fn: (r) => r["_field"] == "x_rounded" or r["_field"] == "y_rounded" or r["_field"] == "z_rounded")
+  |> filter(fn: (r) => r["sensor_name"] == "Motion")
+  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)
+  |> yield(name: "mean")
